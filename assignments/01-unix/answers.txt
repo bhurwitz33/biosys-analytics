@@ -1,0 +1,87 @@
+* Make a directory (in this directory) called "files" 
+
+$ mkdir files
+
+* Download the following using their existing filenames (i.e., you will have "usdeclar.txt", etc.):
+		* https://www.constitution.org/usdeclar.txt
+		* https://www.usconstitution.net/const.txt
+
+$ cd files
+$ wget https://www.constitution.org/usdeclar.txt
+$ wget https://www.usconstitution.net/const.txt
+
+* Download https://www.gutenberg.org/files/25344/25344-0.txt as "scarlet.txt" (in one line, i.e., do not download and then rename -- how can you specify the download filename?)
+
+$ wget -O scarlet.txt https://www.gutenberg.org/files/25344/25344-0.txt
+
+* Show a long listing of the files
+
+$ ls -l
+total 1152
+-rw-r--r--@ 1 kyclark  staff   45119 Jan 18 11:58 const.txt
+-rw-r--r--@ 1 kyclark  staff  525464 Jan 23  2015 scarlet.txt
+-rw-r--r--@ 1 kyclark  staff    8685 Jan 18 11:58 usdeclar.txt
+
+* Show a command to count the number of lines in each file and a total count of all lines
+
+$ wc -l *
+     872 const.txt
+    9120 scarlet.txt
+     176 usdeclar.txt
+   10168 total
+
+* Show a command that will find the files in this directory which are larger than 50k
+
+$ find . -size +50k
+./scarlet.txt
+
+* Show a command that will tell you what kind of file that Unix considers "const.txt"
+
+$ file const.txt
+const.txt: ASCII text
+
+* Show a single command that will print the MD5 sum of all the text files (without mentioning each file individually)
+
+$ md5 *
+MD5 (const.txt) = f66a8165c621d48bac2216b2f31e8742
+MD5 (scarlet.txt) = 4958553be1483e4cbd615ce5fa73f6ab
+MD5 (usdeclar.txt) = 7f54939b30ae7b6d45d473a4c82a41b0
+
+* Show the output of a command that will tell you how much disk space in kilobytes (K) is being used
+
+$ du -shc .
+576K	.
+576K	total
+
+* Show a command to count how many lines of text contain the word "judge" (irrespective of case) in all the files
+
+$ grep -i judge * | wc -l;
+      22
+
+* Show a command that will display only the names of the files that contain the word "human" 
+
+$ grep -li human *.txt
+scarlet.txt
+usdeclar.txt
+
+* Show a single command that will count the number of times the word "scarlet" appears in "scarlet.txt" (case-insensitive); that is, not the number of lines that contain "scarlet" but each occurrence of the word
+
+$ grep -io scarlet scarlet.txt | wc -l
+     125
+
+* Show a single command that will take the first 15 lines from each file and append them into a new file called "foo"
+
+$ head -15 * > foo
+
+* Show a command that shows how many lines are in "foo"
+
+$ wc -l foo
+      50 foo
+
+* You might have expected that the total number of lines in the previous question would be 45 (15 * 3), but it should not be. Why is it more or less?
+
+When running "head" on multiple files, "head" will insert a header for the file it's currently processing.
+
+* Remove the file called "foo"
+
+$ rm foo
